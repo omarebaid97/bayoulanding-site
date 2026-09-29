@@ -1,0 +1,8 @@
+services:
+  bayoulanding-site:
+    image: nginx:alpine
+    container_name: bayoulanding-site
+    restart: unless-stopped
+    volumes:
+      - ./site:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro

@@ -1,0 +1,796 @@
+/* ==========================================================================
+   Bayou Landing Homeowners Association, Inc.
+   Single stylesheet for the whole site. No frameworks, no webfonts,
+   no external requests. Mobile-first.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* Calm, civic palette: deep slate-teal on warm paper. */
+  --bg:            #f7f6f3;
+  --surface:       #ffffff;
+  --surface-alt:   #eeece6;
+  --ink:           #1c2430;
+  --ink-soft:      #46505f;
+  --line:          #d5d1c8;
+  --line-strong:   #b6b1a5;
+
+  --brand:         #1f4e5f;
+  --brand-dark:    #143741;
+  --brand-tint:    #e6eef1;
+
+  --link:          #17505f;
+  --link-visited:  #4a3f6b;
+
+  --warn-bg:       #fdf4e3;
+  --warn-line:     #a86a09;
+  --warn-ink:      #4d3103;
+
+  --note-bg:       #edf3f5;
+  --note-line:     #1f4e5f;
+
+  --focus:         #a34a00;
+
+  --radius:        6px;
+  --measure:       65ch;
+  --shadow:        0 1px 2px rgba(28, 36, 48, .07), 0 3px 10px rgba(28, 36, 48, .05);
+
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+          Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset / base
+   -------------------------------------------------------------------------- */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+  scroll-padding-top: 1.5rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg { max-width: 100%; height: auto; }
+
+h1, h2, h3, h4 {
+  line-height: 1.25;
+  color: var(--brand-dark);
+  font-weight: 700;
+  margin: 2rem 0 .6rem;
+  text-wrap: balance;
+}
+
+h1 { font-size: 1.75rem; margin-top: .5rem; letter-spacing: -.01em; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.1rem; }
+h4 { font-size: 1rem; }
+
+p, ul, ol, table, dl { margin: 0 0 1rem; }
+
+a { color: var(--link); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:visited { color: var(--link-visited); }
+a:hover { color: var(--brand-dark); }
+
+/* Focus: always clearly visible, never removed. */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+/* Fallback for engines without :focus-visible */
+:focus { outline: 3px solid var(--focus); outline-offset: 2px; }
+:focus:not(:focus-visible) { outline: none; }
+
+hr { border: 0; border-top: 1px solid var(--line); margin: 2rem 0; }
+
+table { border-collapse: collapse; width: 100%; font-size: .95em; }
+th, td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+th { background: var(--surface-alt); }
+
+code, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size: .92em; }
+
+/* --------------------------------------------------------------------------
+   3. Skip link
+   -------------------------------------------------------------------------- */
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--surface);
+  color: var(--brand-dark);
+  padding: .7rem 1.1rem;
+  font-weight: 700;
+  border: 2px solid var(--brand-dark);
+  border-radius: 0 0 var(--radius) 0;
+}
+
+.skip-link:focus {
+  left: 0;
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   4. Site header & primary nav
+   -------------------------------------------------------------------------- */
+
+.site-header {
+  background: var(--brand-dark);
+  color: #ffffff;
+  border-bottom: 4px solid var(--brand);
+}
+
+.site-header-inner {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: .9rem 1rem 1rem;
+}
+
+.site-title {
+  display: inline-block;
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: .01em;
+}
+
+.site-title span {
+  display: block;
+  font-size: .78rem;
+  font-weight: 400;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: #c5dbe2;
+}
+
+.site-title:visited { color: #ffffff; }
+.site-title:hover { color: #ffffff; text-decoration: underline; }
+
+.site-nav { margin-top: .8rem; }
+
+.site-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem .35rem;
+}
+
+.site-nav a {
+  display: block;
+  padding: .4rem .65rem;
+  border-radius: var(--radius);
+  color: #e3eef1;
+  text-decoration: none;
+  font-size: .95rem;
+  border: 1px solid transparent;
+}
+
+.site-nav a:visited { color: #e3eef1; }
+
+.site-nav a:hover {
+  background: rgba(255, 255, 255, .12);
+  color: #ffffff;
+  text-decoration: underline;
+}
+
+.site-nav a[aria-current] {
+  background: var(--surface);
+  color: var(--brand-dark);
+  font-weight: 700;
+}
+
+.site-nav a[aria-current]:visited { color: var(--brand-dark); }
+
+/* Light focus ring against the dark header bar. */
+.site-header :focus-visible,
+.site-footer :focus-visible {
+  outline: 3px solid #ffcf6b;
+  outline-offset: 2px;
+}
+
+@media (min-width: 46em) {
+  .site-header-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+  .site-nav { margin-top: 0; }
+  .site-nav ul { justify-content: flex-end; }
+}
+
+/* --------------------------------------------------------------------------
+   5. Page shell
+   -------------------------------------------------------------------------- */
+
+main {
+  display: block;
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.page-intro {
+  max-width: var(--measure);
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.breadcrumb {
+  font-size: .9rem;
+  color: var(--ink-soft);
+  margin-bottom: .25rem;
+}
+
+main > p,
+main > ul,
+main > ol,
+main > h2,
+main > h3,
+section > p,
+section > ul,
+section > ol { max-width: var(--measure); }
+
+.section { margin: 2.5rem 0 0; }
+
+.updated {
+  font-size: .85rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+/* --------------------------------------------------------------------------
+   6. Quick links / cards
+   -------------------------------------------------------------------------- */
+
+.quick-links {
+  list-style: none;
+  margin: 1.5rem 0 2rem;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 34em) {
+  .quick-links { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--brand);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: var(--ink);
+  height: 100%;
+}
+
+a.card:visited { color: var(--ink); }
+
+a.card:hover,
+a.card:focus-visible {
+  background: var(--brand-tint);
+  border-left-color: var(--brand-dark);
+}
+
+.card h2,
+.card h3 {
+  margin: 0 0 .35rem;
+  font-size: 1.08rem;
+  color: var(--brand-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.card p {
+  margin: 0;
+  font-size: .95rem;
+  color: var(--ink-soft);
+  max-width: none;
+}
+
+.card .card-meta {
+  display: block;
+  margin-top: .5rem;
+  font-size: .82rem;
+  color: var(--ink-soft);
+  letter-spacing: .03em;
+  text-transform: uppercase;
+}
+
+/* Standalone call-to-action button */
+.btn {
+  display: inline-block;
+  background: var(--brand);
+  color: #ffffff;
+  border: 2px solid var(--brand-dark);
+  border-radius: var(--radius);
+  padding: .75rem 1.4rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+}
+
+.btn:visited { color: #ffffff; }
+.btn:hover { background: var(--brand-dark); color: #ffffff; text-decoration: underline; }
+
+/* --------------------------------------------------------------------------
+   7. Callouts
+   -------------------------------------------------------------------------- */
+
+.callout {
+  background: var(--note-bg);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--note-line);
+  border-radius: var(--radius);
+  padding: .9rem 1.1rem;
+  margin: 1.5rem 0;
+  max-width: var(--measure);
+}
+
+.callout > :first-child { margin-top: 0; }
+.callout > :last-child { margin-bottom: 0; }
+
+.callout h2,
+.callout h3,
+.callout h4 { margin-top: 0; font-size: 1rem; }
+
+.callout p { max-width: none; }
+
+.callout-warning {
+  background: var(--warn-bg);
+  border-left-color: var(--warn-line);
+  color: var(--warn-ink);
+}
+
+.callout-warning a { color: #7a2f00; }
+.callout-warning a:visited { color: #7a2f00; }
+
+.callout-warning .callout-label {
+  display: block;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-size: .78rem;
+  margin-bottom: .3rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. FAQ
+   -------------------------------------------------------------------------- */
+
+.faq-item {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  margin: 0 0 1rem;
+  max-width: var(--measure);
+}
+
+.faq-item h2,
+.faq-item h3 {
+  margin: 0 0 .5rem;
+  font-size: 1.08rem;
+}
+
+.faq-item > :last-child { margin-bottom: 0; }
+.faq-item p, .faq-item ul, .faq-item ol { max-width: none; }
+
+/* --------------------------------------------------------------------------
+   9. Contact / definition-style lists
+   -------------------------------------------------------------------------- */
+
+.contact-block {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  margin: 0 0 1.25rem;
+  max-width: var(--measure);
+}
+
+.contact-block > :first-child { margin-top: 0; }
+.contact-block > :last-child { margin-bottom: 0; }
+.contact-block p { max-width: none; }
+
+.escalation {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: var(--measure);
+  counter-reset: step;
+}
+
+.escalation li {
+  position: relative;
+  padding: .65rem 0 .65rem 2.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.escalation li:last-child { border-bottom: 0; }
+
+.escalation li::before {
+  counter-increment: step;
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: .7rem;
+  width: 1.7rem;
+  height: 1.7rem;
+  line-height: 1.7rem;
+  text-align: center;
+  border-radius: 50%;
+  background: var(--brand);
+  color: #ffffff;
+  font-size: .85rem;
+  font-weight: 700;
+}
+
+/* --------------------------------------------------------------------------
+   10. Site footer
+   -------------------------------------------------------------------------- */
+
+.site-footer {
+  background: var(--brand-dark);
+  color: #dfe9ec;
+  border-top: 4px solid var(--brand);
+  margin-top: 3rem;
+  font-size: .95rem;
+}
+
+.site-footer-inner {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.site-footer a { color: #ffffff; }
+.site-footer a:visited { color: #ffffff; }
+
+.site-footer p { max-width: 48rem; }
+
+.site-footer-links {
+  list-style: none;
+  margin: 0 0 1rem;
+  padding: 0;
+}
+
+.site-footer-links li { margin-bottom: .3rem; }
+
+.site-footer-note {
+  border-top: 1px solid rgba(255, 255, 255, .22);
+  padding-top: .9rem;
+  margin-bottom: 0;
+  color: #c1d5da;
+  font-size: .88rem;
+}
+
+/* --------------------------------------------------------------------------
+   11. Governing-document pages
+   -------------------------------------------------------------------------- */
+
+body.doc-page { background: var(--bg); }
+
+.doc-body {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 3rem;
+}
+
+.doc-titleblock { max-width: var(--measure); }
+.doc-titleblock h1 { margin-bottom: .3rem; }
+.doc-titleblock p { color: var(--ink-soft); }
+
+.doc-body > h1 { max-width: var(--measure); }
+
+.doc-body > p,
+.doc-body > article > p { max-width: var(--measure); }
+
+.doc-disclaimer {
+  background: var(--surface-alt);
+  border: 1px solid var(--line-strong);
+  border-left: 5px solid var(--brand);
+  border-radius: var(--radius);
+  padding: .8rem 1rem;
+  font-size: .95rem;
+  color: var(--ink);
+  max-width: var(--measure);
+}
+
+/* In-document search box */
+.doc-body input[type="search"] {
+  width: 100%;
+  max-width: 26rem;
+  font: inherit;
+  font-size: 1rem;
+  padding: .55rem .7rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+/* --- Table of contents --- */
+
+.doc-toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: .9rem 1rem;
+  margin: 1.5rem 0 2rem;
+  box-shadow: var(--shadow);
+  font-size: .95rem;
+}
+
+.doc-toc h2 {
+  margin: 0 0 .5rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--ink-soft);
+}
+
+.doc-toc ul {
+  list-style: none;
+  margin: 0 0 .5rem;
+  padding: 0;
+}
+
+.doc-toc ul ul {
+  margin: .25rem 0 .25rem .9rem;
+  padding-left: .6rem;
+  border-left: 2px solid var(--line);
+}
+
+.doc-toc li { margin: 0 0 .3rem; }
+
+.doc-toc a {
+  display: block;
+  padding: .15rem 0;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+
+.doc-toc a:hover { text-decoration: underline; }
+
+.doc-toc p {
+  font-size: .88rem;
+  color: var(--ink-soft);
+  margin: .6rem 0 0;
+}
+
+/* Mobile: the ToC collapses to a short scrolling panel, followed by a jump
+   link, so a sixty-entry contents list never buries the document itself. */
+.doc-toc {
+  max-height: 17rem;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.doc-toc h2 {
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  padding-bottom: .4rem;
+  margin-bottom: .2rem;
+  z-index: 1;
+}
+
+.toc-jump {
+  display: inline-block;
+  margin: -1.25rem 0 2rem;
+  font-weight: 700;
+  font-size: .92rem;
+}
+
+/* --- Document body --- */
+
+.doc-article {
+  max-width: var(--measure);
+  margin: 0 0 2.5rem;
+}
+
+.doc-article-title {
+  font-size: 1.25rem;
+  margin: 2.25rem 0 .5rem;
+  padding-bottom: .35rem;
+  border-bottom: 2px solid var(--line-strong);
+}
+
+.doc-section { margin: 0 0 1.25rem; }
+
+.doc-section > h3 { font-size: 1.08rem; }
+.doc-section > h4 { font-size: 1rem; color: var(--ink); }
+
+.doc-section p,
+.doc-section li { max-width: var(--measure); }
+
+.doc-article ol,
+.doc-article ul { padding-left: 1.5rem; }
+
+.doc-article li { margin-bottom: .6rem; }
+
+.doc-unclear {
+  background: #fbeecb;
+  border-bottom: 1px dotted var(--warn-line);
+  padding: 0 .1em;
+  color: var(--warn-ink);
+}
+
+.doc-backlinks {
+  font-size: .95rem;
+  margin: 2rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+
+/* Desktop: sticky sidebar contents, full-height document column. */
+@media (min-width: 62em) {
+  .doc-body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 17.5rem;
+    column-gap: 2.5rem;
+    align-items: start;
+  }
+
+  .doc-body > * { grid-column: 1; min-width: 0; }
+
+  .doc-toc {
+    grid-column: 2;
+    grid-row: 1 / span 200;
+    position: sticky;
+    top: 1rem;
+    margin-top: 1.5rem;
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .toc-jump { display: none; }
+}
+
+/* --------------------------------------------------------------------------
+   12. Print — residents printing the Bylaws etc.
+   -------------------------------------------------------------------------- */
+
+@media print {
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --surface-alt: #ffffff;
+    --ink: #000000;
+    --ink-soft: #000000;
+    --brand-dark: #000000;
+    --brand: #000000;
+  }
+
+  html { scroll-behavior: auto; }
+
+  body {
+    background: #ffffff;
+    color: #000000;
+    font-size: 11pt;
+    line-height: 1.45;
+  }
+
+  .skip-link,
+  .site-header,
+  .site-footer,
+  .site-nav,
+  .doc-toc,
+  .breadcrumb,
+  .doc-backlinks,
+  .toc-jump,
+  input[type="search"],
+  label[for="doc-filter"] { display: none !important; }
+
+  main,
+  .doc-body {
+    display: block;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .doc-article,
+  .doc-body > p,
+  .doc-section p,
+  .doc-section li,
+  .card p,
+  main > p,
+  section > p { max-width: none; }
+
+  a { color: #000000; text-decoration: underline; }
+
+  /* Print the destination of real links, but not of in-page anchors. */
+  a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 9pt; word-break: break-all; }
+  a[href^="mailto:"]::after { content: " (" attr(href) ")"; font-size: 9pt; }
+
+  h1, h2, h3, h4 { page-break-after: avoid; break-after: avoid; color: #000000; }
+
+  .doc-section,
+  .faq-item,
+  .callout,
+  .card,
+  .contact-block,
+  table, tr, li, p { page-break-inside: avoid; break-inside: avoid; }
+
+  .doc-disclaimer,
+  .callout,
+  .faq-item,
+  .card,
+  .contact-block {
+    border: 1px solid #000000;
+    box-shadow: none;
+    background: #ffffff;
+  }
+
+  .quick-links { display: block; }
+
+  .btn {
+    border: 1px solid #000000;
+    background: #ffffff;
+    color: #000000;
+    box-shadow: none;
+    padding: .3rem .5rem;
+    font-weight: 700;
+  }
+
+  .escalation li::before { background: #ffffff; color: #000000; border: 1px solid #000000; }
+
+  @page { margin: 18mm 16mm; }
+}
+
+/* --------------------------------------------------------------------------
+   13. Figures (e.g. the posted towing signs photo on parking.html)
+   -------------------------------------------------------------------------- */
+
+figure {
+  margin: 1.5rem 0;
+  max-width: var(--measure);
+}
+
+figure img {
+  display: block;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+figcaption {
+  margin-top: .5rem;
+  font-size: .88rem;
+  color: var(--ink-soft);
+}
