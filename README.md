@@ -11,7 +11,7 @@ The authoring source is `hoaAssistant/site` on Omar's Mac, not this repo. This r
 To update the repo, re-rsync `site/` into this folder and commit:
 
 ```sh
-rsync -a --delete --exclude .DS_Store /Users/omar/Downloads/hoaAssistant/site/ site/
+rsync -a --delete --exclude .DS_Store /Users/omar/Downloads/homeLabAssistant/hoaAssistant/site/ site/
 git add -A && git commit -m "Update site" && git push
 ```
 
