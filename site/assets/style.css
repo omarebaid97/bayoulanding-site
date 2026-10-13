@@ -169,8 +169,6 @@ code, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospac
 .site-title:visited { color: #ffffff; }
 .site-title:hover { color: #ffffff; text-decoration: underline; }
 
-.site-nav { margin-top: .8rem; }
-
 .site-nav ul {
   list-style: none;
   margin: 0;
@@ -213,16 +211,27 @@ code, kbd { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospac
   outline-offset: 2px;
 }
 
-@media (min-width: 46em) {
-  .site-header-inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1.5rem;
-    padding: 1rem;
+/* Nav sits on its own full-width row beneath the title at every width. */
+.site-nav {
+  margin-top: .7rem;
+  padding-top: .6rem;
+  border-top: 1px solid rgba(255, 255, 255, .2);
+}
+
+@media (max-width: 47.99em) {
+  /* Nine links in an even 3 x 3 grid: no orphan on the last row. */
+  .site-nav ul {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: .25rem;
   }
-  .site-nav { margin-top: 0; }
-  .site-nav ul { justify-content: flex-end; }
+  .site-nav a { padding: .4rem .5rem; font-size: .9rem; text-align: center; }
+}
+
+/* Mid widths: tighten so all nine links stay on one line. */
+@media (min-width: 48em) and (max-width: 52em) {
+  .site-nav ul { gap: .3rem .1rem; }
+  .site-nav a { padding: .4rem .45rem; font-size: .9rem; }
 }
 
 /* --------------------------------------------------------------------------
@@ -793,4 +802,149 @@ figcaption {
   margin-top: .5rem;
   font-size: .88rem;
   color: var(--ink-soft);
+}
+
+/* --------------------------------------------------------------------------
+   14. Financials page: stat tiles, bar list, tables
+   -------------------------------------------------------------------------- */
+
+.stat-grid {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  max-width: none;
+}
+
+@media (min-width: 34em) {
+  .stat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (min-width: 62em) {
+  .stat-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 5px solid var(--brand);
+  border-radius: var(--radius);
+  padding: 1rem 1.1rem;
+  box-shadow: var(--shadow);
+}
+
+.stat-number {
+  display: block;
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--brand-dark);
+  overflow-wrap: anywhere;
+}
+
+.stat-label {
+  display: block;
+  margin-top: .15rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.stat-note {
+  display: block;
+  margin-top: .4rem;
+  font-size: .92rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+
+/* Horizontal bar list: the text carries the values; the bar is decoration. */
+.bar-list {
+  list-style: none;
+  margin: 1rem 0 .5rem;
+  padding: 0;
+  max-width: 44rem;
+}
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: .2rem .75rem;
+  align-items: baseline;
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.bar-label { grid-column: 1; }
+
+.bar-value {
+  grid-column: 2;
+  grid-row: 1;
+  font-weight: 700;
+  white-space: nowrap;
+  color: var(--brand-dark);
+}
+
+.bar-track {
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: block;
+  height: .8rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  display: block;
+  height: 100%;
+  min-width: 3px;
+  background: var(--brand);
+}
+
+.chart-note {
+  font-size: .88rem;
+  color: var(--ink-soft);
+}
+
+/* Tables: scroll sideways inside their own box on narrow screens. */
+.table-scroll {
+  overflow-x: auto;
+  margin: 0 0 1rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.fin-table caption {
+  text-align: left;
+  font-weight: 700;
+  color: var(--brand-dark);
+  padding: 0 0 .4rem;
+}
+
+.fin-table { background: var(--surface); }
+@media (max-width: 33.99em) {
+  .fin-table { font-size: .85rem; }
+  .fin-table th, .fin-table td { padding: .4rem .35rem; }
+}
+.fin-table th[scope="row"] { background: transparent; font-weight: 400; }
+.fin-table td { overflow-wrap: normal; }
+.fin-table td, .fin-table th[scope="col"] { min-width: 0; }
+.fin-table td:not(:last-child) { white-space: nowrap; }
+.fin-table .total-row th,
+.fin-table .total-row td { font-weight: 700; background: var(--surface-alt); }
+
+.table-sub {
+  color: var(--ink-soft);
+  margin-bottom: .6rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
