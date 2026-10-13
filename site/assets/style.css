@@ -932,6 +932,17 @@ figcaption {
 .fin-table td { overflow-wrap: normal; }
 .fin-table td, .fin-table th[scope="col"] { min-width: 0; }
 .fin-table td:not(:last-child) { white-space: nowrap; }
+
+/* Phones: let cells wrap at spaces (never inside a number) so tables fit without sideways scrolling. */
+@media (max-width: 29em) {
+  .fin-table { font-size: .8rem; }
+  .fin-table th, .fin-table td { padding: .35rem .25rem; }
+  .fin-table td:not(:last-child) { white-space: normal; }
+}
+@media (max-width: 21em) {
+  .fin-table { font-size: .75rem; }
+  .fin-table th, .fin-table td { padding: .3rem .2rem; }
+}
 .fin-table .total-row th,
 .fin-table .total-row td { font-weight: 700; background: var(--surface-alt); }
 
